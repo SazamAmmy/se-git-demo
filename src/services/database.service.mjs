@@ -25,4 +25,16 @@ export default class DatabaseService {
         const city = new City(ID, Name, CountryCode, District, Population);
         return city;
     }
+
+    async getCities() {
+        try {
+            // Fetch cities from database
+            const data = await this.conn.execute("SELECT * FROM `city`");
+            return data;
+        } catch (err) {
+            // Handle error...
+            console.error(err);
+            return undefined;
+        }
+    }
 }
