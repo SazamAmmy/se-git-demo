@@ -56,6 +56,20 @@ app.get('/cities/:id', async (req, res) => {
   return res.render('city', { city });
 })
 
+/* Update a city by ID */
+app.post('/cities/:id', async (req, res) => {
+  const cityId = req.params.id;
+  const { name } = req.body;
+  const sql = `
+    UPDATE city
+    SET Name = '${name}'
+    WHERE ID = '${cityId}';
+  `
+  await conn.execute(sql);
+  const city = await db.getCity(cityId);
+  return res.redirect(`/cities/${cityId}`);
+})
+
 // Returns JSON array of cities
 app.get("/api/cities", async (req, res) => {
   const [rows, fields] = await db.getCities();
