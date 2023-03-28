@@ -15,6 +15,16 @@ th, td {
   color: rgba(0,0,0,0.85);
 }
 
+thead {
+  background-color: var(--clr-table);
+}
+
+thead th {
+  color: whitesmoke;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+
 .fit {
   width: 1px;
   white-space: nowrap;
