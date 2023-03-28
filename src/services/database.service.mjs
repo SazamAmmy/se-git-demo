@@ -61,7 +61,6 @@ export default class DatabaseService {
       data.CountryPopulation
     );
     city.country = country;
-    console.log(city);
     return city;
   }
 

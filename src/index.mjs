@@ -66,7 +66,6 @@ app.post('/cities/:id', async (req, res) => {
     WHERE ID = '${cityId}';
   `
   await conn.execute(sql);
-  const city = await db.getCity(cityId);
   return res.redirect(`/cities/${cityId}`);
 })
 
