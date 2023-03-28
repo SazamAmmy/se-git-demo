@@ -7,6 +7,9 @@ import DatabaseService from "./services/database.service.mjs";
 const app = express();
 const port = 3000;
 
+/* Add form data middleware */
+app.use(express.urlencoded({ extended: true }));
+
 // Integrate Pug with Express
 app.set("view engine", "pug");
 
