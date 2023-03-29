@@ -75,6 +75,15 @@ app.get("/api/cities", async (req, res) => {
   return res.send(rows);
 });
 
+app.get("/api/countries", async (req, res) => {
+  const countries = await db.getCountries();
+  res.send(countries);
+});
+
+
+
+
+
 // Run server!
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);

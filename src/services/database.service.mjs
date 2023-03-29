@@ -45,7 +45,6 @@ export default class DatabaseService {
     const [rows, fields] = await this.conn.execute(sql);
     /* Get the first result of the query (we're looking up the city by ID, which should be unique) */
     const data = rows[0];
-    console.log(data);
     const city = new City(
       data.ID,
       data.Name,
@@ -71,5 +70,13 @@ export default class DatabaseService {
     );
     console.log(res);
     return res;
+  }
+
+  /* Get a list of countries */
+  async getCountries() {
+    const sql = `SELECT * FROM country`;
+    const [rows, fields] = await this.conn.execute(sql);
+    const countries = rows.map(c => new Country(c.Code, c.Name, c.Continent, c.Region, c.Population));
+    return countries;
   }
 }
