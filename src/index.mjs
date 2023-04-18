@@ -88,6 +88,11 @@ app.get("/register", (req, res) => {
   res.render("register");
 });
 
+// Login
+app.get("/login", (req, res) => {
+  res.render("login");
+});
+
 // Account
 app.get("/account", (req, res) => {
   res.send("Account");
@@ -107,6 +112,29 @@ app.post("/api/register", async (req, res) => {
   }
 });
 
+app.post("/api/login", async (req, res) => {
+  const { email, password } = req.body
+
+  if (!email || !password) {
+    return res.status(401).send("Missing credentials");
+  }
+
+  const sql = `SELECT password FROM user WHERE email = '${email}'`;
+  const [results, cols] = await conn.execute(sql);
+  const hash = results[0]?.password;
+
+  if (!hash) {
+    return res.status(401).send("User does not exist");
+  }
+
+  const match = await bcrypt.compare(password, hash);
+
+  if (!match) {
+    return res.status(401).send("Invalid password");
+  }
+
+  return res.redirect('/account');
+})
 
 
 // Run server!
