@@ -80,7 +80,12 @@ app.get("/api/countries", async (req, res) => {
   res.send(countries);
 });
 
+/* Authentication */
 
+// Register
+app.get("/register", (req, res) => {
+  res.render("register");
+});
 
 
 
