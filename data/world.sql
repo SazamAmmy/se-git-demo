@@ -26,30 +26,18 @@ CREATE DATABASE `world` DEFAULT CHARACTER SET utf8mb4;
 
 USE `world`;
 
-CREATE TABLE `Users` (
- `id` int NOT NULL,
- `email` varchar(255) NOT NULL,
- `password` varchar(255) NOT NULL
+CREATE TABLE `user` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `email` varchar(255) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`)
 );
 --
--- Dumping data for table `Users`
+-- Dumping data for table `user`
 --
-INSERT INTO `Users` (`id`, `email`, `password`) VALUES
-(1, 'adam@example.com', 'password'),
-(2, 'lisa@lisa.com', 'password'),
-(3, 'arturo@arturo.com', 'password'),
-(4, 'Sobham@sobhan.com', '');
---
--- Indexes for table `Users`
---
-ALTER TABLE `Users`
- ADD PRIMARY KEY (`id`);
---
--- AUTO_INCREMENT for table `Users`
---
-ALTER TABLE `Users`
- MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
-
+INSERT INTO `user` VALUES (1,'adam@example.com','password');
+INSERT INTO `user` VALUES (2,'tom@example.com','password');
+commit;
 
 --
 -- Table structure for table `city`
