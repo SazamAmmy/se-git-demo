@@ -1,6 +1,7 @@
 /* Import dependencies */
 import express from "express";
 import mysql from "mysql2/promise";
+import bcrypt from "bcryptjs";
 import DatabaseService from "./services/database.service.mjs";
 
 /* Create express instance */
@@ -50,24 +51,24 @@ app.get("/cities", async (req, res) => {
   return res.render("cities", { rows, fields });
 });
 
-app.get('/cities/:id', async (req, res) => {
+app.get("/cities/:id", async (req, res) => {
   const cityId = req.params.id;
   const city = await db.getCity(cityId);
-  return res.render('city', { city });
-})
+  return res.render("city", { city });
+});
 
 /* Update a city by ID */
-app.post('/cities/:id', async (req, res) => {
+app.post("/cities/:id", async (req, res) => {
   const cityId = req.params.id;
   const { name } = req.body;
   const sql = `
     UPDATE city
     SET Name = '${name}'
     WHERE ID = '${cityId}';
-  `
+  `;
   await conn.execute(sql);
   return res.redirect(`/cities/${cityId}`);
-})
+});
 
 // Returns JSON array of cities
 app.get("/api/cities", async (req, res) => {
@@ -85,6 +86,25 @@ app.get("/api/countries", async (req, res) => {
 // Register
 app.get("/register", (req, res) => {
   res.render("register");
+});
+
+// Account
+app.get("/account", (req, res) => {
+  res.send("Account");
+});
+
+app.post("/api/register", async (req, res) => {
+  const { email, password } = req.body;
+  const hashed = await bcrypt.hash(password, 10);
+  try {
+    const sql = `INSERT INTO user (email, password) VALUES ('${email}', '${hashed}')`;
+    const result = await conn.execute(sql);
+    console.log(result);
+    return res.redirect("/account");
+  } catch (err) {
+    console.error(err);
+    return res.status(400).send(err.sqlMessage);
+  }
 });
 
 
