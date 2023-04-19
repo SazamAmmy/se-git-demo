@@ -104,14 +104,18 @@ app.get("/login", (req, res) => {
 });
 
 // Account
-app.get("/account", (req, res) => {
-  const { auth } = req.session;
+app.get("/account", async (req, res) => {
+  const { auth, userId } = req.session;
 
   if (!auth) {
     return res.redirect("/login");
   }
 
-  res.send("Account");
+  const sql = `SELECT id, email FROM user WHERE user.id = ${userId}`;
+  const [results, cols] = await conn.execute(sql);
+  const user = results[0];
+
+  res.render("account", { user });
 });
 
 app.post("/api/register", async (req, res) => {
